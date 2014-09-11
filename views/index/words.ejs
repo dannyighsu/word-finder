@@ -1,0 +1,8 @@
+<script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
+<script>
+var sock = io.connect('http://localhost:1337');
+console.log(sock);
+sock.on('results', function (data) {
+    console.log('hi');
+});
+</script>

@@ -9,13 +9,13 @@ module.exports = {
 
     words: function(req, res) {
         var word = req.body.word;
-        findword(word);
+        findword(word, req, res);
         res.view();
     }
 
 };
 
-function findword(input) {
+function findword(input, req, res) {
     input = input.split('');
     var http = require('http');
 
@@ -26,8 +26,19 @@ function findword(input) {
             dict += chunk;
         });
         res.on('end', function () {
-            process(dict, input);
-        })
+            var result = process(dict, input);
+            var socket = req.socket;
+            var io = sails.io;
+            io.sockets.emit('results', {words: result});
+
+            //var app = require('http').createServer();
+            //var io = require("socket.io")(app);
+            //io.on("connection", function (sock) {
+            //    console.log('reached');
+            //    sock.emit("results", { words: result });
+            //});
+            //app.listen(1024);
+        });
     });
 }
 
