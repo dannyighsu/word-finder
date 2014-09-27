@@ -27,9 +27,14 @@ function findword(input, req, res) {
         });
         res.on('end', function () {
             var result = process(dict, input);
-            var socket = req.socket;
-            var io = sails.io;
-            io.sockets.emit('results', {words: result});
+            sails.get('/data', function(req, res){
+                res.send(result);
+            });
+
+            //var result = process(dict, input);
+            //var socket = req.socket;
+            //var io = sails.io;
+            //io.sockets.emit('results', {words: result});
 
             //var app = require('http').createServer();
             //var io = require("socket.io")(app);

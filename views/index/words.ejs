@@ -1,8 +1,25 @@
 <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
 <script>
-var sock = io.connect('http://localhost:1337');
-console.log(sock);
-sock.on('results', function (data) {
-    console.log('hi');
+//var sock = io.connect('http://localhost:1337');
+//console.log(sock);
+//sock.on('results', function (data) {
+//    console.log('hi');
+//});
+function httpGet(url) {
+    var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    return xmlHttp.responseText;
+}
+$(document).ready(function() {
+    var res = httpGet("http://localhost:1337/data");
+    document.getElementById('hi').innerHTML = res;
 });
 </script>
+
+<div id='hi'>
+</div>
+<ul id='list'>
+</ul>
